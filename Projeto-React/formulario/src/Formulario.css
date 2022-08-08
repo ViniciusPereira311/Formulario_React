@@ -2,15 +2,15 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
- }
+}
 
- .formulario-single{
+.formulario-single{
     margin-top: 0px;
     width: 50%;
     padding: 8px 20px;
- }
+}
  
- .form {
+.form {
     border: 2px solid black;
     border-radius: 10px;
     display: flex;
@@ -20,9 +20,9 @@
     flex-wrap: wrap;
     justify-content: center;
     background-color: rgb(197, 230, 248);
- }
+}
 
- .form h2{
+.form h2{
     margin-top: 0px;
     width: 60%;
     padding: 10px 10px;
@@ -30,18 +30,16 @@
     flex-wrap: wrap;
     justify-content: center;
 
- } 
+} 
 
- .form input[type=text]{
+.form input[type=txt]{
     width: 35%;
     justify-content: space-between;
     height: 35%;
     margin: 8px 0px;
- }
-    
+}
 
- 
- .form fieldset{
+.form fieldset{
     justify-content: center;
     display: flex;
     width: 100%;
@@ -50,21 +48,20 @@
     margin-top: 10px;
     flex-wrap: wrap;
     border: 0;
- }
+}
 
 .form label{
     justify-content: center;
     display: flex;
 }
 
-
-
- input, select, textarea, button{
+input, select, textarea, button{
     border-radius: 5px;
- }
+}
 
 .campo{
     margin-bottom: 1em;
+    
     
 }
 
@@ -89,18 +86,15 @@ fieldset.grupo .campo{
 
 fieldset.grupo .checkbox{
     width: 73%;
-    margin-right:  27%;
-    
+    margin-right:  27%; 
 }
-
-
 
 .checkbox input[type="checkbox"]{
     width: 5%;
     float: left;
 }
 
-.campo input[type="text"]{
+.campo input[type="txt"]{
     width: 81%;
     padding: 0.2em;
     border: 1px solid black;
@@ -147,12 +141,10 @@ fieldset.grupo .checkbox{
     border: 1px solid black;
     padding: 3px 8px;
     border-radius: 5px;
-
 }
 
 .botao:hover {
     background: rgb(242, 240, 242);
-
 }
 
 #check {
@@ -163,4 +155,4 @@ fieldset.grupo .checkbox{
     margin-top: 20px;
     width: 100%;
     padding: 8px 30px;
- }
+}

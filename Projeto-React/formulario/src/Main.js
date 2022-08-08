@@ -1,15 +1,15 @@
 
 function Main(){
-    return(
-      <div className='main'>
+  return(
+    <div className='main'>
       <div className='center'>
         <div className='menu'>
           <div className='logo'>
             <h2>Projeto.Teste</h2>
           </div>
-        <div className='item-menu'>
-          <a href='#'><strong>Entrar</strong></a>
-        </div>
+          <div className='item-menu'>
+            <a href='#'><strong>Entrar</strong></a>
+          </div>
         </div>
         <div className="navegar">
           <ul id="navigation">
@@ -22,9 +22,9 @@ function Main(){
             <li><a href="">Contato</a></li>
           </ul>
         </div>
+      </div>
     </div>
-    </div>
-    )
-}
+    );
+};
 
 export default Main;
