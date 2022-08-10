@@ -34,9 +34,9 @@ const options = [
 
 export const SelectEstados = () => {
   return(
-    <>
-    <Select className="select" options={options} onChange={console.log}/>
-    </>
+    <div>
+    <Select placeholder="Selecione" className="select" options={options}/>
+    </div>
   );
 };
 
