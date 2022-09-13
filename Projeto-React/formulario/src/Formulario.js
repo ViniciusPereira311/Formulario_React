@@ -1,23 +1,15 @@
 import { useState } from 'react';
 import React from "react";
 import Select from "react-select";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFloppyDisk, faNoteSticky, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 function Formulario() { 
-    
-    const [nome, setNome] = useState()
-    const [Sobrenome, setSobrenome] = useState()
-    const [email, setEmail] = useState()
-    const [check, setCheck] = useState()
-    const [option1, setOption1] = useState()
-    const [option2, setOption2] = useState()
-    const [option3, setOption3] = useState()
-    const [option4, setOption4] = useState()
-    const [option5, setOption5] = useState()
-    const [option6, setOption6] = useState()
-    const [textarea, setTexterea] = useState()
 
-    const options = [
+    const options = [ // Array Select
         { value: 'AC', label: 'Acre' },
         { value: 'AL', label: 'Alagoas' },
         { value: 'AP', label: 'Amapá' },
@@ -34,7 +26,7 @@ function Formulario() {
         { value: 'PA', label: 'Pará' },
         { value: 'PB', label: 'Paraíba' },
         { value: 'PR', label: 'Paraná' },
-        { value: 'PE', label: 'Pernambuco' },
+        { value: 'PE', label: 'Pernambuco' }, 
         { value: 'PI', label: 'Piauí' },
         { value: 'RJ', label: 'Rio de Janeiro' },
         { value: 'RN', label: 'Rio Grande do Norte' },
@@ -45,83 +37,174 @@ function Formulario() {
         { value: 'SP', label: 'São Paulo' },
         { value: 'SE', label: 'Sergipe' },
         { value: 'TO', label: 'Tocantins' },
-      ];
+    ];
+    
+     // State com a Array de todos os itens
+    const [checked, setChecked] = useState([]);
 
-    function meuEvento(e) {
+
+    const listaChecked = [
+        'HTML', 
+        'CSS', 
+        'JAVA', 
+        'PHP', 
+        'C#', 
+        'REACT',
+    ];
+    
+    // Evento de Adicionar & Remover item marcado da lista
+    const handlerChecked = (event) => {
+        var atualizarLista = [...checked];
+        if (event.target.checked) {
+        atualizarLista = [...checked, event.target.value];
+        } else {
+        atualizarLista.splice(checked.indexOf(event.target.value), 1);
+        }
+        setChecked(atualizarLista);
+    };
+
+
+    const checkedItems = checked.length
+    ? checked.reduce((total, item) => {
+        return total + ", " + item;
+      })
+    : "";
+
+    // Retornar classes com base em que o item está marcado
+    var isChecked = (item) =>
+    checked.includes(item) ? "ok-checou-item" : "nao-checou-item";
+
+    // UseState do Form
+    const [form, setForm] = useState({
+        nome:'',
+        sobrenome:'',
+        email:'',
+        check:'',
+        selecione: null,
+        selecioneDois: null,
+        texto:''
+    });
+
+    // quando tem os eventos padroes
+    // ou seja quando tem target
+    const handler = (event) => {
+        setForm(form => ({...form, [event.target.name]: event.target.value }));       
+    }
+
+    // quando tem eventos customizados
+    // ou seja, o event já é o valor
+    const handlerSelect = (event, campo) => {
+        // console.log(event, campo)
+        setForm(form => ({...form, [campo]: event}));
+    }
+
+    function salvarForm(e) {
         e.preventDefault()
         console.log('Enviando Dados...')
-        console.log(nome)
-        console.log(Sobrenome)
-        console.log(email)
-        console.log(check)
-        console.log(option1)
-        console.log(option2)
-        console.log(option3)
-        console.log(option4)
-        console.log(option5)
-        console.log(option6)
-        console.log(textarea)
+        console.log(form)
+        console.log(checked)
     }
-      
+     
+    function limparForm(e) {
+        setForm({
+            nome:'',
+            sobrenome:'',
+            email:'',
+            check:'',
+            selecione: '',
+            selecioneDois: '',
+            texto:'',
+        })
+        console.log('Limpando Dados...')
+    }
+
     return(
         <div className='formulario'>
             <div className='formulario-single'>
-                <h1>FORMULARIO TESTE - </h1>
+                <h1>FORMULARIO TESTE - <i><FontAwesomeIcon icon={faNoteSticky} /></i></h1>
                 <p>Complete suas informações no formulario teste:</p>
             </div>
             <div className='form'>
                 <h2>COMPLETE O FORMULARIO:</h2>
-                <form>
-                    <fieldset className="grupo">
-                        <div className="campo">
+                <form style={{ padding: '30px' }}>
+                    <fieldset className='grupo'>
+                        <div className='campo'>
                             <label><strong>Nome:</strong></label>
-                            <input type="txt" name="nome" id="nome" onChange={(e) => setNome(e.target.value)}/>
+                            { /* <input type="txt" name="nome" value={form.nome} onChange={handler} required/> */ }
+                            { /* <input type="txt" name="nome" value={form.nome} onChange={e => handlerSelect(e.target, e.target.name)} required/> */ }
+                            <input type='txt' name='nome' value={form.nome} onChange={e => handlerSelect(e.target.value, 'nome')} required/>
                         </div>
                         <div className="campo">
                             <label><strong>Sobrenome:</strong></label>
-                            <input type="txt" name="sobrenome" id="sobrenome" onChange={(e) => setSobrenome(e.target.value)}/>
+                            <input type="txt" name="sobrenome" value={form.sobrenome} onChange={handler} required/>
                         </div>
                     </fieldset>
                     <div className="campo">
                         <label><strong>E-mail</strong>:</label>
-                        <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="email" name="email" value={form.email} onChange={handler} required/>
                     </div>
                     <div className="campo">
-                        <label><strong>Você Conhece nossa Empresa?</strong></label>
                         <label>
-                            <input type="radio" name="check" defaultValue="sim" defaultChecked onChange={(e) => setCheck(e.target.value)}/>Sim
+                            <strong>Você Conhece nossa Empresa?</strong>
                         </label>
                         <label>
-                            <input type="radio" name="check" defaultValue="nao" onChange={(e) => setCheck(e.target.value)}/>Não
+                            <input type="radio" name="check"  value={form.check} onChange={e => handlerSelect('Sim', 'check')} />Sim
+                        </label>
+                        <label>
+                            <input type="radio" name="check" onChange={e => handlerSelect('Não', 'check')}/>Não
                         </label>
                     </div> 
                     <div className="campo">
-                        <label><strong>Qual estado voce é:</strong></label>
-                        <Select placeholder="Selecione" className="select" options={options}/>
+                        <label>
+                            <strong>Qual estado voce é:</strong>
+                        </label>
+                        <Select placeholder="Selecione" options={options} onChange={e => handlerSelect(e.value, 'selecione')} />
                     </div>
-                    <fieldset className="grupo" >
-                        <div className="checkbox" >
-                            <label><strong>Quais são suas areas de conhecimento?</strong></label>
-                            <input type="checkbox" id="option1" name="option1" defaultValue="HTML" onChange={(e) => setOption1(e.target.value)}/>
-                            <label >HTML</label>
-                            <input type="checkbox" id="option2" name="option2" defaultValue="CSS" onChange={(e) => setOption2(e.target.value)}/>
-                            <label>CSS</label>
-                            <input type="checkbox" id="option3" name="option3" defaultValue="JAVA" onChange={(e) => setOption3(e.target.value)}/>
-                            <label>JAVA</label>
-                            <input type="checkbox" id="option4" name="option4" defaultValue="PHP" onChange={(e) => setOption4(e.target.value)}/>                           
-                            <label>PHP</label>
-                            <input type="checkbox" id="option5" name="option5" defaultValue="C#" onChange={(e) => setOption5(e.target.value)}/>
-                            <label>C#</label>
-                            <input type="checkbox" id="option6" name="option6" defaultValue="REACT" onChange={(e) => setOption6(e.target.value)}/>
-                            <label>REACT</label>
-                        </div>
-                    </fieldset>
                     <div className="campo">
-                        <br/>
-                        <label><strong>Conte um pouco sobre suas experiencias:</strong></label>
-                        <textarea row="6" id="experiencia" name="experiencia" onChange={(e) => setTexterea(e.target.value)}></textarea>
+                        <label>
+                            <strong>Qual estado voce é Dois:</strong>
+                        </label>
+                        <Select placeholder="Selecione Dois" options={options} onChange={e => handlerSelect(e.value, 'selecioneDois')} />
                     </div>
-                    <button onClick={meuEvento} className="botao" type="submit"><strong>Enviar</strong></button>
+                    <div className="campo">
+                        <label>
+                            <strong>Quais são suas areas de conhecimento?</strong>
+                        </label>
+                        <div className="campo">
+                            {listaChecked.map((item, index) => (
+                                <div key={index}>
+                                    <input value={item} type="checkbox" onChange={handlerChecked} />
+                                    <span className={isChecked(item)}>{item}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="campo">
+                        <label>
+                            <strong>Conte um pouco sobre suas experiencias:</strong>
+                        </label>
+                        <textarea row="6" id="experiencia" name="texto" value={form.texto} onChange={handler}></textarea>
+                    </div>
+                    <button onClick={salvarForm} className="botao" type="submit">
+                        <strong>Enviar <i><FontAwesomeIcon icon={faFloppyDisk} /></i></strong>
+                    </button>
+                    <button onClick={limparForm} className="botao2" type="reset">
+                        <strong>Limpar <i><FontAwesomeIcon icon={faTrash} /></i></strong>
+                    </button>
+                    <p style={{ wordBreak: 'break-all', padding: '10px' }}>
+                        { JSON.stringify(form) }
+                    </p>
+                    <div>
+                        {`Áreas Selecionadas:" ${checkedItems}"`}
+                    </div>
+                    { /* <p>nome:{form.nome}</p>
+                    <p>sobrenome:{form.sobrenome}</p>
+                    <p>email:{form.email}</p>
+                    <p>selecione:{form.selecione}</p>
+                    <p>selecione Dois:{form.selecioneDois}</p>
+                    <p>check:{form.check}</p>
+                    <p>option1:{form.option1}</p>
+                    <p>texto:{form.texto}</p> */ }
                 </form> 
             </div>
         </div>
